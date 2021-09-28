@@ -40,6 +40,7 @@ export const AddItemModal = ({ isVisible, setIsVisible, addItem }: Props) => {
   useEffect(() => {
     if (!isVisible) {
       setData(initialData);
+      setError('');
     }
   }, [isVisible]);
 
@@ -132,9 +133,6 @@ const _hasError = (data: Record<string, string>): boolean => {
   for (let prop in data) {
     if (!data[prop] || data[prop].trim().length <= 0) {
       return true;
-    }
-    if (prop === 'price') {
-      console.log(isNaN(parseFloat(data[prop].trim())));
     }
     if (prop === 'price' && isNaN(parseFloat(data[prop].trim()))) {
       return true;

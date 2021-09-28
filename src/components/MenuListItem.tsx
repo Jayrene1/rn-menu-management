@@ -13,7 +13,10 @@ export const MenuListItem = ({ item, onPress }: Props) => {
   const imgSource =
     typeof item.imgUrl === 'string' ? { uri: item.imgUrl } : item.imgUrl;
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onPress(item)}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => onPress(item)}
+      accessibilityLabel="Open Item Options">
       <Image
         source={imgSource}
         style={styles.image}

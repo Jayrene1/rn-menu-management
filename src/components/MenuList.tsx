@@ -45,6 +45,7 @@ export const MenuList = ({ menu }: Props) => {
           <SectionHeader title="Your Menu">
             <AddButton
               onPress={() => setAddModalIsVisible(!addModalIsVisible)}
+              accessibilityLabel="Open Add Item Form"
             />
           </SectionHeader>
         )}
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    marginBottom: 102, // centers the contained text by adding marginBottom equal to the section header height above
+    marginBottom: 102, // centers the contained text by adding marginBottom equal to the section header height above'
     justifyContent: 'center',
   },
   emptyText: {

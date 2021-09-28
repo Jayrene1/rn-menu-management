@@ -33,6 +33,7 @@ export const Input = ({ label, isPrice, ...props }: Props) => {
           </View>
         )}
         <TextInput
+          accessibilityLabel={`${label} Input`}
           style={styles.input}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
