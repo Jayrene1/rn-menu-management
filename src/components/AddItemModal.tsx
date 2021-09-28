@@ -48,7 +48,7 @@ export const AddItemModal = ({ isVisible, setIsVisible, addItem }: Props) => {
     const hasError = _hasError(data);
 
     if (hasError) {
-      setError('Please fill every field to add a menu item.');
+      setError('Please fill every field correctly to add a menu item.');
     } else {
       addItem({
         id: 0,
@@ -85,6 +85,7 @@ export const AddItemModal = ({ isVisible, setIsVisible, addItem }: Props) => {
               onChangeText={(text) => setValue('title', text)}
               autoCapitalize="words"
               autoCorrect={false}
+              placeholder="Fried Rice..."
             />
             <View style={styles.margin16} />
             <Input
@@ -92,13 +93,16 @@ export const AddItemModal = ({ isVisible, setIsVisible, addItem }: Props) => {
               value={data.description}
               onChangeText={(text) => setValue('description', text)}
               autoCapitalize="sentences"
+              placeholder="Peas, carrots, green onion, soy sauce..."
             />
             <View style={styles.margin16} />
             <Input
               label="Price"
               value={data.price}
               onChangeText={(text) => setValue('price', text)}
+              placeholder="4.95"
               keyboardType="decimal-pad"
+              isPrice
             />
             <View style={styles.margin16} />
             <Input
@@ -107,10 +111,11 @@ export const AddItemModal = ({ isVisible, setIsVisible, addItem }: Props) => {
               onChangeText={(text) => setValue('imgUrl', text)}
               autoCapitalize="none"
               autoCorrect={false}
+              placeholder="https://picsum.photos/200"
             />
             <View style={styles.margin16} />
             <View style={styles.margin16} />
-            <WideButton label="Add Item To Menu +" onPress={onSubmit} />
+            <WideButton label="Add Menu Item" onPress={onSubmit} />
             {error && error.length > 0 ? (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{error}</Text>
@@ -128,7 +133,10 @@ const _hasError = (data: Record<string, string>): boolean => {
     if (!data[prop] || data[prop].trim().length <= 0) {
       return true;
     }
-    if (prop === 'price' && typeof parseFloat(data[prop].trim()) !== 'number') {
+    if (prop === 'price') {
+      console.log(isNaN(parseFloat(data[prop].trim())));
+    }
+    if (prop === 'price' && isNaN(parseFloat(data[prop].trim()))) {
       return true;
     }
   }
