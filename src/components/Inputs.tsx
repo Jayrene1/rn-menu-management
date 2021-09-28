@@ -11,7 +11,8 @@ export const Input = ({ label, ...props }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
   const focusedStyle = useMemo(
     () => ({
-      borderColor: isFocused ? COLOR.yellow[300] : COLOR.gray[100],
+      borderColor: isFocused ? COLOR.yellow[300] : COLOR.gray[200],
+      borderWidth: isFocused ? 2 : 1,
     }),
     [isFocused]
   );
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: COLOR.gray[100],
     borderRadius: 8,
   },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Modal,
   ScrollView,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { COLOR } from '../lib/constants';
+import { MenuItem } from '../lib/models';
 import { WideButton } from './Buttons';
 import { Input } from './Inputs';
 import { SectionHeader } from './Layout';
@@ -17,9 +18,49 @@ import { ScreenWrapper } from './ScreenWrapper';
 type Props = {
   isVisible: boolean;
   setIsVisible: (isVisible: boolean) => void;
+  addItem: (item: MenuItem) => void;
 };
 
-export const AddItemModal = ({ isVisible, setIsVisible }: Props) => {
+const initialData = {
+  title: '',
+  description: '',
+  price: '',
+  imgUrl: '',
+};
+
+export const AddItemModal = ({ isVisible, setIsVisible, addItem }: Props) => {
+  const [data, setData] = useState(initialData);
+  const [error, setError] = useState('');
+
+  const setValue = (
+    prop: 'title' | 'description' | 'price' | 'imgUrl',
+    value: string
+  ) => setData({ ...data, [prop]: value });
+
+  useEffect(() => {
+    if (!isVisible) {
+      setData(initialData);
+    }
+  }, [isVisible]);
+
+  const onSubmit = useCallback(() => {
+    setError('');
+    const hasError = _hasError(data);
+
+    if (hasError) {
+      setError('Please fill every field to add a menu item.');
+    } else {
+      addItem({
+        id: 0,
+        title: data.title.trim(),
+        description: data.description.trim(),
+        price: parseFloat(data.price.trim()),
+        imgUrl: data.imgUrl.trim(),
+      });
+      setIsVisible(false);
+    }
+  }, [data, addItem, setIsVisible]);
+
   return (
     <Modal
       visible={isVisible}
@@ -38,16 +79,43 @@ export const AddItemModal = ({ isVisible, setIsVisible }: Props) => {
           </SectionHeader>
           <View style={styles.spacer} />
           <View style={styles.container}>
-            <Input label="Title" />
+            <Input
+              label="Title"
+              value={data.title}
+              onChangeText={(text) => setValue('title', text)}
+              autoCapitalize="words"
+              autoCorrect={false}
+            />
             <View style={styles.margin16} />
-            <Input label="Description" />
+            <Input
+              label="Description"
+              value={data.description}
+              onChangeText={(text) => setValue('description', text)}
+              autoCapitalize="sentences"
+            />
             <View style={styles.margin16} />
-            <Input label="Price" />
+            <Input
+              label="Price"
+              value={data.price}
+              onChangeText={(text) => setValue('price', text)}
+              keyboardType="decimal-pad"
+            />
             <View style={styles.margin16} />
-            <Input label="Image URL" />
+            <Input
+              label="Image URL"
+              value={data.imgUrl}
+              onChangeText={(text) => setValue('imgUrl', text)}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
             <View style={styles.margin16} />
             <View style={styles.margin16} />
-            <WideButton label="Add Item To Menu +" />
+            <WideButton label="Add Item To Menu +" onPress={onSubmit} />
+            {error && error.length > 0 ? (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{error}</Text>
+              </View>
+            ) : null}
           </View>
         </ScrollView>
       </ScreenWrapper>
@@ -55,9 +123,21 @@ export const AddItemModal = ({ isVisible, setIsVisible }: Props) => {
   );
 };
 
+const _hasError = (data: Record<string, string>): boolean => {
+  for (let prop in data) {
+    if (!data[prop] || data[prop].trim().length <= 0) {
+      return true;
+    }
+    if (prop === 'price' && typeof parseFloat(data[prop].trim()) !== 'number') {
+      return true;
+    }
+  }
+  return false;
+};
+
 const styles = StyleSheet.create({
   scrollView: {
-    marginHorizontal: 24,
+    marginHorizontal: 20,
   },
   scrollViewContainer: {
     flex: 1,
@@ -74,6 +154,19 @@ const styles = StyleSheet.create({
     height: 16,
   },
   container: {
-    marginBottom: 32,
+    paddingBottom: 32,
+    position: 'relative',
+  },
+  errorContainer: {
+    position: 'absolute',
+    bottom: 8,
+    left: 0,
+    right: 0,
+  },
+  errorText: {
+    fontSize: 14,
+    color: COLOR.red[500],
+    fontStyle: 'italic',
+    textAlign: 'center',
   },
 });

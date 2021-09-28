@@ -1,18 +1,21 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { COLOR } from '../lib/constants';
 import { MenuItem } from '../lib/models';
 
 type Props = {
   item: MenuItem;
+  onPress: (item: MenuItem) => void;
 };
 
-export const MenuListItem = ({ item }: Props) => {
+export const MenuListItem = ({ item, onPress }: Props) => {
+  const imgSource =
+    typeof item.imgUrl === 'string' ? { uri: item.imgUrl } : item.imgUrl;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => onPress(item)}>
       <Image
-        source={item.imgUrl}
+        source={imgSource}
         style={styles.image}
         accessibilityLabel={`${item.title} Image`}
       />
@@ -27,7 +30,7 @@ export const MenuListItem = ({ item }: Props) => {
           {item.description}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -62,5 +65,6 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
+    color: COLOR.gray[500],
   },
 });

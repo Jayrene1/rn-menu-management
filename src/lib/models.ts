@@ -5,5 +5,5 @@ export type MenuItem = {
   title: string;
   description: string;
   price: number;
-  imgUrl: ImageSourcePropType;
+  imgUrl: ImageSourcePropType | string;
 };
