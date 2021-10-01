@@ -77,10 +77,9 @@ export const MenuList = ({ menu }: Props) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
-    flex: 1,
   },
   margin: {
-    height: 24,
+    height: 20,
   },
   emptyContainer: {
     flex: 1,

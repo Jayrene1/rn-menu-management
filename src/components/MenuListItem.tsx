@@ -29,9 +29,10 @@ export const MenuListItem = ({ item, onPress }: Props) => {
           </Text>
           <Text style={styles.price}>{item.price.toFixed(2).toString()}</Text>
         </View>
-        <Text style={styles.description} numberOfLines={3}>
+        <Text style={styles.description} numberOfLines={2}>
           {item.description}
         </Text>
+        <Text style={styles.viewButton}>See More</Text>
       </View>
     </TouchableOpacity>
   );
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 8,
   },
   title: {
@@ -69,5 +71,11 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: COLOR.gray[500],
+  },
+  viewButton: {
+    fontSize: 13,
+    color: COLOR.yellow[600],
+    fontWeight: '500',
+    marginTop: 6,
   },
 });

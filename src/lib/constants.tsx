@@ -31,7 +31,7 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 1,
     title: 'Salmon Salad',
     description:
-      'Grilled slices of salmon over edamame, red cabbage, green pepper, corn, tomatoes, and a boiled egg',
+      'Grilled slices of salmon over edamame, red cabbage, green pepper, corn, tomatoes, and a boiled egg.',
     price: 11.5,
     imgUrl: require('../images/salmon-salad.jpg'),
   },
@@ -39,7 +39,7 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 2,
     title: 'Carne Asada tacos',
     description:
-      'Three beef tacos topped with pickled red onions, jalapeños and cilantro',
+      'Three beef tacos topped with pickled red onions, jalapeños and cilantro.',
     price: 8,
     imgUrl: require('../images/carne-asada-taco.jpg'),
   },
@@ -47,14 +47,14 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 3,
     title: 'Bacon Burger',
     description:
-      'Bacon, beef, cheddar, lettuce and tomato on a sesame-topped brioche bun',
+      'Bacon, beef, cheddar, lettuce and tomato on a sesame-topped brioche bun.',
     price: 10,
     imgUrl: require('../images/bacon-burger.jpg'),
   },
   {
     id: 4,
     title: 'French Fries',
-    description: 'Hand-cut fries with some shaved pecorino and sea salt',
+    description: 'Hand-cut fries with some shaved pecorino and sea salt.',
     price: 4.5,
     imgUrl: require('../images/french-fries.jpg'),
   },
@@ -62,7 +62,7 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 5,
     title: 'Tonkotsu Ramen',
     description:
-      'Noodles in savory Tonkotsu broth with three thick slices of pork belly, bean sprouts, seawood, and a soft-boiled egg',
+      'Noodles in savory Tonkotsu broth with three thick slices of pork belly, bean sprouts, seawood, and a soft-boiled egg.',
     price: 13,
     imgUrl: require('../images/tonkotsu-ramen.jpg'),
   },
@@ -70,8 +70,23 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 6,
     title: 'Wings, Buffalo-Style',
     description:
-      'Original roasted wings tossed in a house-made red pepper hot sauce',
+      'Original roasted wings tossed in a house-made red pepper hot sauce.',
     price: 13,
     imgUrl: require('../images/buffalo-wings.jpg'),
+  },
+  {
+    id: 7,
+    title: 'Chicken Sandwich',
+    description: 'fdlaskfj.',
+    price: 13,
+    imgUrl: require('../images/chicken-sandwich.jpg'),
+  },
+  {
+    id: 8,
+    title: 'Chips & Salsa',
+    description:
+      'Original roasted wings tossed in a house-made red pepper hot sauce.',
+    price: 13,
+    imgUrl: require('../images/chips-salsa.jpg'),
   },
 ];
