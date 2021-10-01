@@ -6,7 +6,7 @@ import { MenuScreen } from './MenuScreen';
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar />
       <MenuScreen />
     </>
   );

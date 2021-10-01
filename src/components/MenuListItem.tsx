@@ -1,42 +1,68 @@
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { COLOR } from '../lib/constants';
 import { MenuItem } from '../lib/models';
 
+const PLACEHOLDER_IMG =
+  'https://via.placeholder.com/300?text=Invalid+Image+URL';
+
 type Props = {
   item: MenuItem;
-  onPress: (item: MenuItem) => void;
+  onPress?: (item: MenuItem) => void;
+  readOnly?: boolean;
 };
 
-export const MenuListItem = ({ item, onPress }: Props) => {
-  const imgSource =
-    typeof item.imgUrl === 'string' ? { uri: item.imgUrl } : item.imgUrl;
+export const MenuListItem = ({ item, onPress, readOnly }: Props) => {
+  const [imgSource, setImgSource] = useState(_createImageType(item.imgUrl));
+
+  useEffect(() => {
+    setImgSource(_createImageType(item.imgUrl));
+  }, [item.imgUrl]);
+  const price =
+    typeof item.price === 'number' && !isNaN(item.price)
+      ? item.price.toFixed(2).toString()
+      : '?';
+
   return (
     <TouchableOpacity
+      disabled={readOnly}
       style={styles.container}
-      onPress={() => onPress(item)}
+      onPress={() => (onPress ? onPress(item) : null)}
       accessibilityLabel="Open Item Options">
       <Image
         source={imgSource}
         style={styles.image}
         accessibilityLabel={`${item.title} Image`}
+        onError={() => {
+          setImgSource(_createImageType(PLACEHOLDER_IMG));
+        }}
       />
       <View style={styles.detailContainer}>
         <View style={styles.titleContainer}>
           <Text numberOfLines={1} style={styles.title}>
             {item.title}
           </Text>
-          <Text style={styles.price}>{item.price.toFixed(2).toString()}</Text>
+          <Text style={styles.price}>{price}</Text>
         </View>
-        <Text style={styles.description} numberOfLines={2}>
+        <Text style={styles.description} numberOfLines={readOnly ? 3 : 2}>
           {item.description}
         </Text>
-        <Text style={styles.viewButton}>See More</Text>
+        {!readOnly && <Text style={styles.viewButton}>See More</Text>}
       </View>
     </TouchableOpacity>
   );
 };
+
+const _createImageType = (img: string | ImageSourcePropType) =>
+  typeof img === 'string' ? { uri: img } : img;
 
 const styles = StyleSheet.create({
   container: {

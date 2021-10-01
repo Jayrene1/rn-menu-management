@@ -6,14 +6,11 @@ export type UseMenu = {
   items: MenuItem[];
   addItem: (item: MenuItem) => void;
   removeItemById: (id: number) => void;
+  editItem: (item: MenuItem) => void;
 };
 
 export const useMenu = (initialItems: MenuItem[]): UseMenu => {
   const [items, setItems] = useState(initialItems);
-
-  // useEffect(() => {
-  //   console.log(items);
-  // }, [items]);
 
   /*
     similar to the purpose of a SQL primary key, this value tracks
@@ -37,5 +34,17 @@ export const useMenu = (initialItems: MenuItem[]): UseMenu => {
     [items]
   );
 
-  return { items, addItem, removeItemById };
+  const editItem = useCallback(
+    (item: MenuItem) => {
+      const i = items.findIndex((x) => x.id === item.id);
+      if (i > -1) {
+        const newItems = [...items];
+        newItems[i] = item;
+        setItems(newItems);
+      }
+    },
+    [items]
+  );
+
+  return { items, addItem, removeItemById, editItem };
 };

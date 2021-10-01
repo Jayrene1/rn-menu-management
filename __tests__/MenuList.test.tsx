@@ -32,6 +32,7 @@ const menu = {
   ],
   addItem: jest.fn(),
   removeItemById: jest.fn(),
+  editItem: jest.fn(),
 };
 
 const alertMock = jest.spyOn(Alert, 'alert');

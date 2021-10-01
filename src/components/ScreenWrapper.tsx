@@ -1,5 +1,10 @@
 import React, { ReactNode } from 'react';
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 
 // const Component = Platform.select({
 //   ios: () => require('ComponentIOS'),
@@ -12,7 +17,9 @@ type Props = {
 
 export const ScreenWrapper = ({ children }: Props) => {
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.wrapper}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.wrapper}>
       <SafeAreaView style={styles.wrapper}>{children}</SafeAreaView>
     </KeyboardAvoidingView>
   );

@@ -6,6 +6,7 @@ import { MenuItem } from '../lib/models';
 import { UseMenu } from '../lib/use-menu';
 import { AddItemModal } from './AddItemModal';
 import { AddButton } from './Buttons';
+import { EditItemModal } from './EditItemModal';
 import { SectionHeader } from './Layout';
 import { MenuListItem } from './MenuListItem';
 
@@ -15,13 +16,16 @@ type Props = {
 
 export const MenuList = ({ menu }: Props) => {
   const [addModalIsVisible, setAddModalIsVisible] = useState(false);
-  const { items, addItem, removeItemById } = menu;
+  const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
+  const { items, addItem, removeItemById, editItem } = menu;
 
   const displayItemInfo = (item: MenuItem) => {
     Alert.alert(item.title, `Description: ${item.description}`, [
-      { text: 'Close' },
+      { text: 'Close', style: 'cancel' },
+      { text: 'Edit', onPress: () => setEditingItem(item) },
       {
         text: 'Remove',
+        style: 'destructive',
         onPress: () => confirmRemove(item),
       },
     ]);
@@ -69,6 +73,11 @@ export const MenuList = ({ menu }: Props) => {
         isVisible={addModalIsVisible}
         setIsVisible={setAddModalIsVisible}
         addItem={addItem}
+      />
+      <EditItemModal
+        item={editingItem}
+        setItem={setEditingItem}
+        editItem={editItem}
       />
     </>
   );
