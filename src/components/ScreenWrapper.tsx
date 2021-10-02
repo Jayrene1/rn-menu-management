@@ -6,11 +6,6 @@ import {
   StyleSheet,
 } from 'react-native';
 
-// const Component = Platform.select({
-//   ios: () => require('ComponentIOS'),
-//   android: () => require('ComponentAndroid'),
-// })();
-
 type Props = {
   children: ReactNode;
 };
@@ -19,6 +14,7 @@ export const ScreenWrapper = ({ children }: Props) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'android' ? 96 : undefined}
       style={styles.wrapper}>
       <SafeAreaView style={styles.wrapper}>{children}</SafeAreaView>
     </KeyboardAvoidingView>

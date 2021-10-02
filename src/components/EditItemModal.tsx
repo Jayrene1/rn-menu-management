@@ -68,9 +68,7 @@ export const EditItemModal = ({ item, setItem, editItem }: Props) => {
   return (
     <Modal visible={!!item} animationType="slide" presentationStyle="formSheet">
       <ScreenWrapper>
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollViewContainer}>
+        <View style={styles.headerContainer}>
           <SectionHeader title="Edit Item">
             <TouchableOpacity
               onPress={() => setItem(null)}
@@ -78,12 +76,13 @@ export const EditItemModal = ({ item, setItem, editItem }: Props) => {
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
           </SectionHeader>
-          <View style={styles.itemContainer}>
-            {item && <MenuListItem item={item} readOnly />}
-          </View>
-          <View style={styles.container}>
+          {item && <MenuListItem item={item} readOnly />}
+        </View>
+        <View style={styles.scrollViewContainer}>
+          <View style={styles.spacer} />
+          <ScrollView style={styles.scrollView}>
             <Input
-              label="Title"
+              label="Edit Title"
               value={item?.title ?? ''}
               onChangeText={(text) => setValue('title', text)}
               autoCapitalize="words"
@@ -92,7 +91,7 @@ export const EditItemModal = ({ item, setItem, editItem }: Props) => {
             />
             <View style={styles.margin16} />
             <Input
-              label="Description"
+              label="Edit Description"
               value={item?.description ?? ''}
               onChangeText={(text) => setValue('description', text)}
               autoCapitalize="sentences"
@@ -100,7 +99,7 @@ export const EditItemModal = ({ item, setItem, editItem }: Props) => {
             />
             <View style={styles.margin16} />
             <Input
-              label="Price"
+              label="Edit Price"
               value={priceString}
               onChangeText={(text) => setPrice(text)}
               placeholder="4.95"
@@ -109,7 +108,7 @@ export const EditItemModal = ({ item, setItem, editItem }: Props) => {
             />
             <View style={styles.margin16} />
             <Input
-              label="Image URL"
+              label="Edit Image URL"
               value={typeof item?.imgUrl === 'string' ? item.imgUrl : ''}
               onChangeText={(text) => setValue('imgUrl', text)}
               autoCapitalize="none"
@@ -119,8 +118,8 @@ export const EditItemModal = ({ item, setItem, editItem }: Props) => {
             <View style={styles.margin16} />
             <View style={styles.margin16} />
             <WideButton label="Finish Editing" onPress={onSubmitEditing} />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </ScreenWrapper>
     </Modal>
   );
@@ -141,44 +140,26 @@ const _checkErrors = (item: MenuItem): string[] => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
+  headerContainer: {
+    justifyContent: 'space-between',
     marginHorizontal: 20,
-  },
-  scrollViewContainer: {
-    flex: 1,
   },
   cancelButtonText: {
     color: COLOR.red[500],
     fontSize: 16,
     fontWeight: '600',
   },
-  itemContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 32,
-  },
   margin16: {
     height: 16,
   },
-  container: {
-    paddingBottom: 32,
-    position: 'relative',
+  scrollViewContainer: {
+    flex: 1,
   },
-  errorContainer: {
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
-    right: 0,
+  spacer: {
+    flex: 1,
   },
-  errorText: {
-    fontSize: 14,
-    color: COLOR.red[500],
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+  scrollView: {
+    paddingVertical: 32,
+    paddingHorizontal: 20,
   },
 });
